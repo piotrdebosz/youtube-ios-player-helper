@@ -42,23 +42,26 @@
     var player;
     var error = false;
 
-    YT.ready(function() {
-        player = new YT.Player('player', %@);
-        player.setSize(window.innerWidth, window.innerHeight);
-        window.location.href = 'ytplayer://onYouTubeIframeAPIReady';
+    window.onload = function() {
+	    YT.ready(function() {
+	        player = new YT.Player('player', %@);
 
-        // this will transmit playTime frequently while playng
-        function getCurrentTime() {
-             var state = player.getPlayerState();
-             if (state == YT.PlayerState.PLAYING) {
-                 time = player.getCurrentTime()
-                 window.location.href = 'ytplayer://onPlayTime?data=' + time;
-             }
-        }
-        
-        window.setInterval(getCurrentTime, 500);
-             
-    });
+	        player.setSize(window.innerWidth, window.innerHeight);
+	        window.location.href = 'ytplayer://onYouTubeIframeAPIReady';
+
+	        // this will transmit playTime frequently while playng
+	        function getCurrentTime() {
+	             var state = player.getPlayerState();
+	             if (state == YT.PlayerState.PLAYING) {
+	                 time = player.getCurrentTime()
+	                 window.location.href = 'ytplayer://onPlayTime?data=' + time;
+	             }
+	        }
+	        
+	        window.setInterval(getCurrentTime, 500);
+	            
+	    });
+    }
 
     function onReady(event) {
         window.location.href = 'ytplayer://onReady?data=' + event.data;
